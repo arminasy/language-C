@@ -53,7 +53,7 @@ int main(void) {
   
   char *text;
   printf("Enter text for look reversed text : ");
-  scanf("%s", text);
+  scanf("%[^\n]s", text);
   char *reved;
   reved = malloc(sizeof(char) * ft_strlen(text));
   ft_strrev(reved, text);
