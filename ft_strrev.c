@@ -57,6 +57,6 @@ int main(void) {
   char *reved;
   reved = malloc(sizeof(char) * ft_strlen(text));
   ft_strrev(reved, text);
-  printf("%s", reved);
+  printf("%s\n", reved);
   return 0;
 }
