@@ -36,7 +36,7 @@ char *ft_strcpy(char *dst,const char *src)
   return (dst);
 }
 
-char *ft_strrev(char *dst, char *src)
+char *ft_strrev(char *dst,const char *src)
 {
   size_t i ,j;
   ft_strcpy(dst, src);
