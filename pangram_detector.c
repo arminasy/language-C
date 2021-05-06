@@ -64,8 +64,8 @@ bool    pangram(const char *str)
 
 int main(void)
 {
-    char *isPangram = "abcDEFgHIjKlmn opqrsTUVWXYZ";//is Pangram , the symbols are not repeated.
-    char *isntPangram = "AAbcdeFghIjkLmnOPQRstuvwXYZ";//is not Pangram, because symbols are repeated.
+    char *isPangram = "abcDEFgHIjKlmn opqrsTUVWXYZ";//is Pangram , the characters are not repeated.
+    char *isntPangram = "AAbcdeFghIjkLmnOPQRstuvwXYZ";//is not Pangram, because characters are repeated.
     printf("is Pangram > ? : %s\n", pangram(isPangram) ? "true" : "false");//Should be true
     printf("is Pangram > ? : %s\n", pangram(isntPangram) ? "true" : "false");//Should be false
 }
