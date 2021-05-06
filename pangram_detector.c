@@ -55,7 +55,7 @@ bool    pangram(const char *str)
             i++;
         total += p[i];
         i++;
-        if(total == 2015)//uppercase symbol total sum to integer equal 2015;
+        if(total == 2015)//uppercase characters total sum to integer equal 2015;
             return (true);
     }
     p[i] = '\0';
