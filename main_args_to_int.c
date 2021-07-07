@@ -1,6 +1,57 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <limits.h>
 
-#define n 4
+#define STACK_EMPTY INT_MIN
+
+typedef struct    node
+{
+    int           val;
+    struct node   *next;
+}                 node;
+
+typedef node *stack;
+
+void  ft_swap(int *a, int *b)
+{
+  int swap;
+  swap = *a;
+  *a = *b;
+  *b = swap;
+}
+
+bool    push(stack *mystack, int value)
+{
+    node *newnode = malloc(sizeof(node));
+    if(newnode == NULL)
+        return (false);
+    newnode->val = value;
+    newnode->next = *mystack;
+    *mystack = newnode;
+    return (true);
+}
+
+int   pop(stack *mystack)
+{
+    if(*mystack == NULL)
+        return STACK_EMPTY;
+    int res = (*mystack)->val;
+    node *tmp = *mystack;
+    *mystack = (*mystack)->next;
+    free(tmp);
+    return res;
+}
+
+int    sab(node **head)
+{
+    node *stack;
+    stack = *head;
+
+    if(stack && stack->next)
+        ft_swap(&stack->val, &stack->next->val);
+    return (0);
+}
 
 int			ft_atoi(char *str)
 {
@@ -24,30 +75,142 @@ int			ft_atoi(char *str)
 	return (result * sign);
 }
 
+
+int    pab(stack *a, stack *b)
+{
+    stack tmp;
+    stack to;
+    stack from;
+
+    to = *a;
+    from = *b;
+    if(!from)
+        return (0);
+    tmp = from;
+    from = from->next;
+    *b = from;
+    if (!to)
+    {
+        to = tmp;
+        to->next = NULL;
+        *a = to;
+    }
+    else
+    {
+        tmp->next = to;
+        *a = tmp;
+    }
+    return (0);
+}
+
+int rab(stack *mystack) {
+    node *tmp_first;
+    node *tmp_last;
+    node *stack;
+
+    stack = *mystack;
+    if (!(stack && stack->next))
+        return (0);
+    tmp_first = stack;
+    stack =  stack->next;
+    tmp_last = stack;
+    while (tmp_last->next)
+    {
+        tmp_last = tmp_last->next;
+    }
+    tmp_last->next = tmp_first;
+    tmp_first->next = NULL;
+    *mystack = stack;
+    return (0);
+}
+
+int		rrab(node **head)
+{
+	node	*tmp_last;
+	node	*previous;
+	node	*stack;
+
+	stack = *head;
+	if (!(stack && stack->next))
+		return (0);
+	tmp_last = stack;
+	while (tmp_last->next)
+	{
+		previous = tmp_last;
+		tmp_last = tmp_last->next;
+	}
+	tmp_last->next = stack;
+	previous->next = NULL;
+	*head = tmp_last;
+	return (0);
+}
+
+int ss(stack *a, stack *b)
+{
+    sab(a);
+    sab(b);
+    return (0);
+}
+
+int    rr(stack *a, stack *b)
+{
+    rab(a);
+    rab(b);
+    return (0);
+}
+
+int    rrr(stack *a, stack *b)
+{
+    rrab(a);
+    rrab(b);
+    return (0);
+}
+
+int     count_of_nodes(struct node *head)
+{
+    int count = 0;
+    if(head == NULL)
+        return (0);
+    struct node *ptr = NULL;
+    ptr = head;
+    while(ptr != NULL)
+    {
+        count++;
+        ptr = ptr->next;
+    }
+    return (count);
+}
+
+void  do_three(stack n)
+{
+
+  if(n->val > n->next->val && n->val < n->next->next->val && n->next->val < n->next->next->val)
+}
+
 int main(int argc, char **argv)
 {
-  int j = 0;
+  int m;
   int i = 1;
-  // int j = 0;
-  int tonum[n] = {};
+  stack a = NULL;
+  stack b = NULL;
   if(argc > 1)
   {
-    while(j <= n)
+    while(i < argc)
     {
-      tonum[j] = ft_atoi(argv[j]);
-      j++;
+      push(&a, ft_atoi(argv[i]));
+      rab(&a);
+      i++;
     }
   }
-
-  i = 0;
-  if(argc > 1)
+  if(count_of_nodes(a) < 4)
   {
-    while(i < n)
-      {
-      printf("%d\n", tonum[i + 1]);
-      i++;
-    } 
+    do_three(&a);
   }
-
+  while((m = pop(&a)) != STACK_EMPTY)
+  {
+    printf("%d\n", m);
+  }
+  free(a);
+  free(b);
   return (0);
 }
