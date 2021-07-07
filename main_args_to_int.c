@@ -185,6 +185,12 @@ void  do_three(stack n)
 {
 
   if(n->val > n->next->val && n->val < n->next->next->val && n->next->val < n->next->next->val)
+    sab(&n);
+  else if(n->val > n->next->val && n->val > n->next->next->val && n->next->val > n->next->next->val)
+  {
+    sab(&n);
+    rrab(&n);
+  }
 }
 
 int main(int argc, char **argv)
@@ -204,7 +210,7 @@ int main(int argc, char **argv)
   }
   if(count_of_nodes(a) < 4)
   {
-    do_three(&a);
+    do_three(a);
   }
   while((m = pop(&a)) != STACK_EMPTY)
   {
