@@ -4,6 +4,10 @@
 #include <limits.h>
 
 #define STACK_EMPTY INT_MIN
+#define THREE			3
+#define FIVE			5
+#define HUNDRED			100
+#define FIVE_HUNDRED 	500
 
 typedef struct    node
 {
@@ -181,21 +185,56 @@ int     count_of_nodes(struct node *head)
     return (count);
 }
 
-void  do_three(stack n)
+void  do_three(stack *n)
 {
 
-  if(n->val > n->next->val && n->val < n->next->next->val && n->next->val < n->next->next->val)
-    sab(&n);
-  else if(n->val > n->next->val && n->val > n->next->next->val && n->next->val > n->next->next->val)
+  if((*n)->val > (*n)->next->val && (*n)->val < (*n)->next->next->val && (*n)->next->val < (*n)->next->next->val)
   {
-    sab(&n);
-    rrab(&n);
+	sab(n);
+	printf("sab\n");
   }
+  else if((*n)->val > (*n)->next->val && (*n)->val > (*n)->next->next->val && (*n)->next->val > (*n)->next->next->val)
+  {
+    sab(n);
+    rrab(n);
+	printf("sab\nrrab\n");
+  }
+  else if((*n)->val > (*n)->next->val && (*n)->val > (*n)->next->next->val && (*n)->next->val < (*n)->next->next->val)
+  {
+	rab(n);
+	printf("rab\n");
+  }
+  else if((*n)->val < (*n)->next->val && (*n)->val < (*n)->next->next->val && (*n)->next->val > (*n)->next->next->val)
+  {
+	sab(n);
+	rab(n);
+	printf("sab\nab");
+  }
+  else if((*n)->val < (*n)->next->val && (*n)->val > (*n)->next->next->val && (*n)->next->val > (*n)->next->next->val)
+  {
+	rrab(n);
+	printf("rrab\n");
+  }
+}
+
+void	do_five(stack *a, stack *b)
+{
+	int j;
+	int k;
+	if((*a) && (*a)->next)
+	{
+		pab(b, a);
+		pab(b, a);
+		do_three(a);
+		while()
+	}
+
 }
 
 int main(int argc, char **argv)
 {
   int m;
+  int n;
   int i = 1;
   stack a = NULL;
   stack b = NULL;
@@ -208,15 +247,29 @@ int main(int argc, char **argv)
       i++;
     }
   }
-  if(count_of_nodes(a) < 4)
-  {
-    do_three(a);
-  }
+	if(count_of_nodes(a) < FIVE + 1)
+	{
+		if(count_of_nodes(a) < THREE + 1)
+			do_three(&a);
+		if(count_of_nodes(a) > THREE + 1)
+			do_five(&a, &b);
+	}
+  printf("\ncount of a = %d\n", count_of_nodes(a));
+  printf("count of b = %d\n\n", count_of_nodes(b));
+  printf("a::\n----\n");
   while((m = pop(&a)) != STACK_EMPTY)
   {
     printf("%d\n", m);
   }
+  printf("----\n");
+  printf("b::\n----\n");
+  while((n = pop(&b)) != STACK_EMPTY)
+  {
+    printf("%d\n", n);
+  }
+  printf("----\n");
   free(a);
   free(b);
+
   return (0);
 }
