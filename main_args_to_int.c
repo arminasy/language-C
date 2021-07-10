@@ -25,6 +25,54 @@ void  ft_swap(int *a, int *b)
   *b = swap;
 }
 
+void  bsort(int arr[], int arr_size)
+{
+  int i,j,temp;
+  for(i = 0; i < (arr_size - 1); i++)
+  {
+    for(j = 0; j < arr_size - 1 - i; ++j)
+    {
+      if(arr[j] > arr[j + 1])
+      {
+        ft_swap(&arr[j], &arr[j + 1]);
+      }
+    }
+  }
+}
+
+int     count_of_nodes(struct node *head)
+{
+    int count = 0;
+    if(head == NULL)
+        return (0);
+    struct node *ptr = NULL;
+    ptr = head;
+    while(ptr != NULL)
+    {
+        count++;
+        ptr = ptr->next;
+    }
+    return (count);
+}
+
+
+
+//seg fault when exec on main
+int    get_max(stack *mystack)
+{
+    int i = 0;
+    int count = count_of_nodes(*mystack);
+    int max = (*mystack)->val;
+    while(i < count)
+    {
+        if((*mystack)->val > max)
+            max = (*mystack)->val;
+        (*mystack) = (*mystack)->next;
+        i++;
+    }
+    return (max);
+}
+
 bool    push(stack *mystack, int value)
 {
     node *newnode = malloc(sizeof(node));
@@ -170,28 +218,13 @@ int    rrr(stack *a, stack *b)
     return (0);
 }
 
-int     count_of_nodes(struct node *head)
-{
-    int count = 0;
-    if(head == NULL)
-        return (0);
-    struct node *ptr = NULL;
-    ptr = head;
-    while(ptr != NULL)
-    {
-        count++;
-        ptr = ptr->next;
-    }
-    return (count);
-}
-
 void    do_three(stack *n, int *a, int *b, int *c)
 {
     *a = (*n)->val;
     *b = (*n)->next->val;
     *c = (*n)->next->next->val;
 
-    if(*a < *b < *c)
+    if(*a < *b && *b < *c && *a < *c)
         return;
     else if (*a > *b && *a < *c && *b < *c)
         sab(n);
@@ -200,7 +233,7 @@ void    do_three(stack *n, int *a, int *b, int *c)
         sab(n);
         rrab(n);
     }
-    else if (*a < *b && *a > *c && *b < *c)
+    else if (*a > *b && *a > *c && *b < *c)
         rab(n);
     else if (*a < *b && *a < *c && *b > *c)
     {
@@ -220,53 +253,75 @@ void	do_five(stack *a, stack *b)
 		pab(b, a);
 		pab(b, a);
 		do_three(a, &(*a)->val, &(*a)->next->val, &(*a)->next->next->val);
-		// rab(a);
-		// sab(a);
-		// rrab(a);
-		
-	}
+        // if((*b)->val < (*b)->next->val)
+        // {
 
+        // }
+	}
 }
 
-int main(int argc, char **argv)
+void    repcheck(stack *mystack)
 {
-  int m;
-  int n;
-  int i = 1;
-  stack a = NULL;
-  stack b = NULL;
-  if(argc > 1)
-  {
-    while(i < argc)
-    {
-      push(&a, ft_atoi(argv[i]));
-      rab(&a);
-      i++;
-    }
-  }
-	if(count_of_nodes(a) < FIVE + 1)
-	{
-		if(count_of_nodes(a) < THREE + 1)
-			do_three(&a, &a->val, &a->next->val, &a->next->next->val);
-		if(count_of_nodes(a) > THREE + 1)
-			do_five(&a, &b);
-	}
-  printf("\ncount of a = %d\n", count_of_nodes(a));
-  printf("count of b = %d\n\n", count_of_nodes(b));
-  printf("a::\n----\n");
-  while((m = pop(&a)) != STACK_EMPTY)
-  {
-    printf("%d\n", m);
-  }
-  printf("----\n");
-  printf("b::\n----\n");
-  while((n = pop(&b)) != STACK_EMPTY)
-  {
-    printf("%d\n", n);
-  }
-  printf("----\n");
-  free(a);
-  free(b);
+}
 
-  return (0);
+int     main(int argc, char **argv)
+{
+    int arr[argc];
+
+    int j = 0;
+    int m;
+    int n;
+    int i = 1;
+    stack a = NULL;
+    stack b = NULL;
+    if(argc > 1)
+    {
+        while(i < argc)
+        {
+            push(&a, ft_atoi(argv[i]));
+            rab(&a);
+            arr[j] = ft_atoi(argv[j]);
+            i++;
+            j++;
+        }
+        bsort(arr, argc);
+        // j = 1;
+        // while(j < argc)
+        // {
+        // if(arr[j] == arr[j + 1])
+        //     return (0);
+        // j++;
+        // }
+    }
+    // if(count_of_nodes(a) < FIVE + 1)
+	// {
+	// 	if(count_of_nodes(a) < THREE + 1)
+	// 		do_three(&a, &a->val, &a->next->val, &a->next->next->val);
+	// 	if(count_of_nodes(a) > THREE + 1)
+	// 		do_five(&a, &b);
+	// }
+    // printf("\ncount of a = %d\n", count_of_nodes(a));
+    // printf("count of b = %d\n\n", count_of_nodes(b));
+    // printf("a::\n----\n");
+    // while((m = pop(&a)) != STACK_EMPTY)
+    // {
+    //     printf("%d\n", m);
+    // }
+    // printf("----\n");
+    // printf("b::\n----\n");
+    // while((n = pop(&b)) != STACK_EMPTY)
+    // {
+    //     printf("%d\n", n);
+    // }
+    // printf("----\n");
+    int k = 1;
+    while(k < argc - 1)
+    {
+        printf("%d\n", arr[k]);
+        k++;
+    }
+    free(a);
+    free(b);
+
+    return (0);
 }
